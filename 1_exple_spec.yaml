@@ -1,0 +1,30 @@
+signature:
+  name: SentimentClassifierSignature
+  docstring: |
+    Classify the overall sentiment (positive, negative or neutral) of a short text.
+  inputs:
+    - name: text
+      kind: text                  # plain string
+      desc: "User-provided text to analyse"
+  outputs:
+    - name: sentiment
+      kind: choices               # ‹choices› → Literal[…]
+      choices: [positive, negative, neutral]
+      desc: "Predicted sentiment label"
+    - name: confidence
+      kind: float
+      desc: "Model confidence in [0, 1]"
+  instructions: >
+    Respond with one sentiment label and a confidence score between 0 and 1.
+
+module:
+  name: SentimentClassifier
+  type: Predict                   # DSPy.Predict
+  use: SentimentClassifierSignature
+
+llm:
+  name: openai/gpt-4o-mini
+  provider: openai
+  api_key_env: OPENAI_API_KEY
+  temperature: 0.0                # deterministic
+  max_tokens: 1000

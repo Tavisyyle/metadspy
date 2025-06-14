@@ -7,6 +7,7 @@ app = typer.Typer(add_completion=False)
 @app.command()
 def build(spec: str, out: str = "dspy_program.py"):
     """Generate a DSPy script from a YAML/JSON spec."""
+    print(f"DEBUG: spec={spec}, out={out}", file=sys.stderr)
     spec_obj = load_spec(spec)
     generate_code(spec_obj, output_path=out)
     typer.echo(f"✓  wrote {out}")
